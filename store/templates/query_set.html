@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Query Set</h1>
+    <ul>
+        {% for customer in customer_query_set%}
+            <li>{{customer.email }}</li>
+        {% endfor %}
+    </ul>
+    <ul>
+    {% for product in null_prod %}
+        <li>{{ product.title }}</li>
+    {% endfor %}
+</ul>
+<ul>
+    {%for product in low_inventory%}
+        <li>{{ product.title }} - {{ product.inventory }}</li>
+    {% endfor %}
+</ul>
+<ul>
+    {%for argu_product in q_set%}
+        <li>{{argu_product.title}} ---{{argu_product.unit_price}} ---{{argu_product.inventory}} </li>
+    {% endfor %}
+</ul>
+
+<ul>
+    {% for product in ordered_products %}
+        <li>{{ product.title }}</li>
+    {% empty %}
+        <li>No products found</li>
+    {% endfor %}
+</ul>
+
+<ul>
+    {% for one_order in orders %}
+        <li>{{ one_order.product.title }} ----- {{ one_order.order }} ----- {{ one_order.order.customer.first_name }}</li>
+    {% empty %}
+        <li>No products found</li>
+    {% endfor %}
+</ul>
+
+</body>
+</html>
