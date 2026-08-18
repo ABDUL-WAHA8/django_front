@@ -10,5 +10,8 @@ urlpatterns = [
     path('get_argu_values/',views.get_argu_values),
     path('sortings/',views.sortings),
     path('finding_ordered_products/',views.finding_ordered_products),
-    path('orders_n_customers/',views.orders_n_customers)
+    path('orders_n_customers/',views.orders_n_customers),
+    path('get_customers_full_name/',views.get_customers_full_name),
+    path('get_tag_products/',views.get_tag_products),
+    path('inserting_data/',views.inserting_data)
 ]

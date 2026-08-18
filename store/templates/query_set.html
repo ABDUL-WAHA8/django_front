@@ -7,6 +7,7 @@
 </head>
 <body>
     <h1>Query Set</h1>
+    <p>Framework: {{ framework }}</p>
     <ul>
         {% for customer in customer_query_set%}
             <li>{{customer.email }}</li>
@@ -43,6 +44,14 @@
         <li>No products found</li>
     {% endfor %}
 </ul>
+<ul>
+    {% for one_name in customer_names %}
+        <li>{{ one_name.full_name }} </li>
+    {% empty %}
+        <li>No found</li>
+    {% endfor %}
+</ul>
+
 
 </body>
 </html>

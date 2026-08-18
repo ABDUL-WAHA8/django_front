@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpRequest
-from django.db.models import Q,F
-from store.models import Product,Customer,Collection,OrderItem,Order
+from django.db.models import Q,F,Func,Value
+from django.db.models.functions import Concat
+from store.models import Product,Customer,Collection,OrderItem
+from tags.models import Tag,TaggedItem
 
 # Create your views here.
 def check_db_query(request):
@@ -61,3 +63,27 @@ def orders_n_customers(request):
 
 # task 8 lets try annotation and db functions like concat etc 
 
+def get_customers_full_name(request):
+    query_set=Customer.objects.annotate(
+        full_name=Func(F('first_name'),Value(" "),F('last_name'),function='CONCAT')
+    )
+    return render(request,'query_set.html',{"customer_names":query_set})
+
+def get_tag_products(request):
+    taged_products=TaggedItem.active.CustomManager(Product,1)
+
+    return render(request,'query_set.html',{"framework":"DJANGO !","tagged_products":list(taged_products)})
+
+def inserting_data(request):
+    # customer=Customer()
+    # customer.birth_date="2000-4-28"
+    # customer.email="corban22@gmail.com"
+    # customer.first_name="Abdul"
+    # customer.last_name="Wahab"
+    # customer.membership="B"
+    # customer.phone="03146765484"
+    # customer.save()
+    customer=Customer.objects.filter(first_name__icontains='Abdul')
+    print(customer)
+
+    return render(request,'query_set.html',{"framework":"DJANGO !"})
