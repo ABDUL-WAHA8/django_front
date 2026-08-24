@@ -34,8 +34,10 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'playground',
     'debug_toolbar',
     'store',
@@ -89,7 +91,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'storefront',
         'USER': 'postgres',
-        'PASSWORD': 'jkl;;lkj',
+        'PASSWORD': 'jkl;jkl;',
         'HOST': 'localhost',       # Use 'localhost' or the IP address of your DB server
         'PORT': '5432',            # 5432 is the default PostgreSQL port
     }

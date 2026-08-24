@@ -1,9 +1,14 @@
-from django.shortcuts import render
-from django.http import HttpRequest
+from django.shortcuts import get_object_or_404,render
+from django.http import HttpRequest,HttpResponse
 from django.db.models import Q,F,Func,Value
 from django.db.models.functions import Concat
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import CustomerSerializer ,ProductSerializer
 from store.models import Product,Customer,Collection,OrderItem
 from tags.models import Tag,TaggedItem
+
+
 
 # Create your views here.
 def check_db_query(request):
@@ -74,6 +79,7 @@ def get_tag_products(request):
 
     return render(request,'query_set.html',{"framework":"DJANGO !","tagged_products":list(taged_products)})
 
+# Inserting data into the database using django orm
 def inserting_data(request):
     # customer=Customer()
     # customer.birth_date="2000-4-28"
@@ -87,3 +93,44 @@ def inserting_data(request):
     print(customer)
 
     return render(request,'query_set.html',{"framework":"DJANGO !"})
+
+# Updating data in the database using django orm
+def updating_data(request):
+    # can be updated in two ways either by using the save method or by using the update method
+    # save method
+
+    # customer=Customer.objects.get(pk=1001)
+    # customer.email="abbdul.wahab.dev@gmail.com"
+    # customer.save()
+
+    # update method
+
+    # Customer.objects.filter(pk=1001).update(email="abbbdul.wahab.dev@gmail.com")
+
+    # updated_customer=Customer.objects.get(pk=1001)
+
+
+    delete_customer=Customer.objects.get(pk=1001)
+    delete_customer.delete()
+    # print(updated_customer)
+    # Customer.objects.get(pk=1001)
+    return render(request,"query_set.html",{"framework":"DJANGO!"})
+
+
+@api_view(['Get'])
+def customer_list(request):
+    queryset=Customer.objects.all()
+    serializer=CustomerSerializer(queryset,many=True)
+    return Response(serializer.data)
+
+@api_view(['Get'])
+def product_list(request):
+    queryset=Product.objects.all()
+    serializer=ProductSerializer(queryset,many=True)
+    return Response(serializer.data)
+
+@api_view(['Get'])
+def product_individually(request,id):
+    object=get_object_or_404(Product,id=id)
+    serializer=ProductSerializer(object)
+    return Response(serializer.data)
